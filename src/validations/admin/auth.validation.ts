@@ -7,6 +7,13 @@ import { injectable } from "tsyringe";
 export class AuthValidator {
     createAdminValidator = (req: Request, res: Response, next: NextFunction) => {
         const { error } = Joi.object({
+            name: Joi.string().min(3).max(50).required().messages({
+                'string.base': `name should be a type of text`,
+                'string.empty': `name cannot be empty`,
+                'string.min': `name should have at least {#limit} characters`,
+                'string.max': `name should not exceed {#limit} characters`,
+                'any.required': `name is a required field`,
+            }),
             email: Joi.string().email().required().messages({
                 'string.email': 'Please provide a valid email address',
                 'any.required': 'Email is required',

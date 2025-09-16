@@ -1,5 +1,4 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, OneToOne, ManyToMany, JoinColumn } from 'typeorm';
-import { AdminUser } from './admin.entity';
 
 @Entity()
 export class AdminImages {
@@ -21,6 +20,4 @@ export class AdminImages {
     @CreateDateColumn()
     createdOn!: Date;
 
-    @OneToOne(() => AdminUser, (adminUser) => adminUser.adminImages, { onDelete: 'CASCADE' })
-    adminUser!: AdminUser;
 }

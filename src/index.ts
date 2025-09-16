@@ -1,14 +1,16 @@
 import 'reflect-metadata';
 import express from 'express';
 import dotenv from 'dotenv';
-import routes from './routes';  // Using alias @/ for src/
-import { AppDataSource } from './config/database';
+import routes from './routes';
 import cors from 'cors';
+import { connectDB } from './config/database';
 
 dotenv.config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+connectDB();
 
 app.use(cors({
   origin: '*',
@@ -22,16 +24,9 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to Bizzio!' });
 });
 app.use((req, res) => {
-  res.status(404).json({ message: "This endpoint is not available in Bizzio." });
+  res.status(404).json({ message: "This endpoint is not available in MHF." });
 });
 
-AppDataSource.initialize()
-  .then(() => {
-    console.log('Database connected');
-    app.listen(PORT, () => {
-      console.log(`Server running on port ${PORT}`);
-    });
-  })
-  .catch((error) => {
-    console.error('Database connection error:', error);
-  });
+app.listen(PORT, () => {
+  console.log(`🚀 Server is running on http://localhost:${PORT}`);
+});

@@ -11,8 +11,8 @@ export class AuthController {
 
     createAdminUserController = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { email, password } = req.body;
-            const { success, data, message } = await this.authService.createAdminService({ email, password });
+            const { name, email, password } = req.body;
+            const { success, data, message } = await this.authService.createAdminService({ name, email, password });
 
             return sendResponse({
                 res,

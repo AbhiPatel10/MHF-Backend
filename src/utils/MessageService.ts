@@ -137,5 +137,5 @@ export class MessageService {
     readonly GET_ALL_REVIEW_FETCH_SUCCESS = "All Reviews fetched successfully!";
     readonly GET_ALL_REVIEW_FETCH_ERROR = "Error while fetching all reviews!";
 
-
+    readonly ADMIN_LOGIN_SUCCESS = "Admin login successfully!";
 }

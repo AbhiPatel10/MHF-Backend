@@ -1,46 +1,26 @@
-import { DataSource } from 'typeorm';
-import { User } from '../entities/user.entity';
+// db.js
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { AdminUser } from '../entities/admin/admin.entity';
-import { Categories } from '../entities/admin/categories.entity';
-import { SubCategories } from '../entities/admin/subCategories.entity';
-import { Image } from '../entities/image.entity';
-import { UserOTP } from '../entities/userOtp.entity';
-import { Businesses } from '../entities/businesses.entity';
-import { BusinessHours } from '../entities/businessHours.entity';
-import { Services } from '../entities/service.entity';
-import { Products } from '../entities/product.entity';
-import { AdminImages } from '../entities/admin/adminImages.entity';
-import { TeamMembers } from '../entities/teamMembers.entity';
-import { BusinessReview } from '../entities/businessesReview.entity';
+import { AdminUserModel } from '../entities/admin/admin.schema';
 
 dotenv.config();
 
-export const AppDataSource = new DataSource({
-  type: 'mysql',
-  host: process.env.DB_HOST || 'localhost',
-  port: parseInt(process.env.DB_PORT || '3306', 10),
-  username: process.env.DB_USERNAME || 'root',
-  password: process.env.DB_PASSWORD || '',
-  database: process.env.DB_DATABASE || 'bizzio',
-  entities: [
-    User,
-    AdminUser,
-    Categories,
-    SubCategories,
-    Image,
-    UserOTP,
-    Businesses,
-    BusinessHours,
-    Services,
-    Products,
-    AdminImages,
-    TeamMembers,
-    BusinessReview
-  ], // Add more entities here
-  synchronize: true, // Auto-create tables (set to false in production)
-  logging: false, // Enable for debugging
-  extra: {
-    connectionLimit: 5 // Connection pool size
+export const connectDB = async () => {
+  try {
+    const uri = `mongodb://${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || '27017'}/${process.env.DB_DATABASE}`;
+    await mongoose.connect(uri, {
+      user: process.env.DB_USERNAME || undefined,
+      pass: process.env.DB_PASSWORD || undefined,
+    });
+
+    console.log('✅ MongoDB connected successfully');
+  } catch (err) {
+    console.error('❌ MongoDB connection error:', err);
+    process.exit(1);
   }
-});
+};
+
+export const ensureCollections = async () => {
+  await AdminUserModel.createCollection();
+  console.log('✅ Admin collection ensured');
+};
