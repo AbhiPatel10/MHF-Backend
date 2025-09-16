@@ -1,0 +1,1 @@
+export const APP_NAME = 'My Node TS App';
