@@ -137,5 +137,27 @@ export class MessageService {
     readonly GET_ALL_REVIEW_FETCH_SUCCESS = "All Reviews fetched successfully!";
     readonly GET_ALL_REVIEW_FETCH_ERROR = "Error while fetching all reviews!";
 
+
+
+
+
+
+
     readonly ADMIN_LOGIN_SUCCESS = "Admin login successfully!";
+    readonly ADMIN_LOGIN_ERROR = "Error while logging in!";
+
+    readonly ADMIN_NOT_FOUND = "Admin not found"
+    readonly ADMIN_FETCH_SUCCESS = "Admin fetch successfully"
+    readonly ADMIN_FETCH_ERROR = "Error while fetching admin details!"
+
+    // Volunteer
+
+    readonly VOLUNTEER_ALREADY_EXIST = "Volunteer already exists"
+    readonly VOLUNTEER_CREATE_SUCCESSFULLY = 'Volunteer created successfully'
+    readonly VOLUNTEER_CREATE_ERROR = "Volunteer already exists"
+    readonly VOLUNTEER_NOT_FOUND = "Volunteer not found"
+    readonly VOLUNTEER_FETCH_SUCCESS = "Volunteer fetched successfully"
+    readonly VOLUNTEER_FETCH_ERROR = "Error While fetching volunteer details"
+    readonly VOLUNTEER_UPDATE_SUCCESSFULLY = "Volunteer updated successfully"
+    readonly VOLUNTEER_UPDATE_ERROR = "Error While updating volunteer details"
 }

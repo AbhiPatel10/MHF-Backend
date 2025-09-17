@@ -5,6 +5,7 @@ import { AdminUserModel, AdminUserDocument } from "../../entities/admin/admin.sc
 import { MessageService } from "../../utils/MessageService";
 import { AdminLoginResponse } from "../../types/admin/admin.types";
 import dotenv from 'dotenv';
+import { Types } from "mongoose";
 
 dotenv.config();
 @injectable()
@@ -16,9 +17,20 @@ export class AuthService {
         @inject(MessageService) private readonly messageService: MessageService,
     ) { }
 
-    // ✅ Create Admin
+    /**
+     * Creates admin service
+     * @param { name, email, password } 
+     * @returns admin service 
+     */
     async createAdminService({ name, email, password }: { name: string; email: string; password: string })
-        : Promise<{ success: boolean; message: string; data: Partial<AdminUserDocument> | null }> {
+        : Promise<{
+            success: boolean;
+            message: string;
+            data: {
+                accessToken: string,
+                adminUser: Partial<AdminUserDocument> | null
+            } | null
+        }> {
         try {
             const existAdmin = await AdminUserModel.findOne({ email });
             if (existAdmin) {
@@ -32,13 +44,23 @@ export class AuthService {
             const hashedPassword = await bcrypt.hash(password, this.saltRounds);
             const newAdmin = await AdminUserModel.create({ name, email, password: hashedPassword });
 
+            const adminData = await this.getAdminDetailsService({ adminUserId: newAdmin._id ?? 0 });
+
+            const jwtToken = jwt.sign(
+                { admin: adminData.data },
+                this.jwtSecret,
+                { expiresIn: "24h" }
+            );
             return {
                 success: true,
-                data: { email: newAdmin.email },
+                data: {
+                    accessToken: jwtToken,
+                    adminUser: adminData.data
+                },
                 message: this.messageService.ADMIN_ALREADY_CREATE_SUCCESS,
             };
         } catch (error) {
-            console.log("error in createAdminService", error);
+            console.log("Error in createAdminService:", error);
             return {
                 success: false,
                 message: this.messageService.ADMIN_ALREADY_CREATE_ERROR,
@@ -47,7 +69,11 @@ export class AuthService {
         }
     }
 
-    // ✅ Admin Login
+    /**
+     * Admins login service
+     * @param { email, password } 
+     * @returns login service 
+     */
     async adminLoginService({ email, password }: { email: string; password: string })
         : Promise<AdminLoginResponse> {
         try {
@@ -68,23 +94,67 @@ export class AuthService {
                     data: null,
                 };
             }
-            console.log("this.jwtSecret-----", this.jwtSecret)
+
+            const adminData = await this.getAdminDetailsService({ adminUserId: existAdmin._id ?? 0 });
+
             const jwtToken = jwt.sign(
-                { adminUserId: existAdmin._id, email: existAdmin.email },
+                { admin: adminData.data },
                 this.jwtSecret,
-                { expiresIn: "1h" }
+                { expiresIn: "24h" }
             );
 
             return {
                 success: true,
-                data: { email: existAdmin.email, token: jwtToken },
+                data: {
+                    accessToken: jwtToken,
+                    adminUser: adminData.data
+                },
                 message: this.messageService.ADMIN_LOGIN_SUCCESS,
             };
         } catch (error) {
-            console.log('errrr', error);
+            console.log('Error in adminLoginService:', error);
             return {
                 success: false,
-                message: this.messageService.ADMIN_ALREADY_CREATE_ERROR,
+                message: this.messageService.ADMIN_LOGIN_ERROR,
+                data: null,
+            };
+        }
+    }
+
+    /**
+     * Get Admin Details Service
+     * @param { adminUserId }
+     * @returns admin details
+     */
+    async getAdminDetailsService({ adminUserId }: { adminUserId: Types.ObjectId }): Promise<{
+        success: boolean;
+        message: string;
+        data: Partial<AdminUserDocument> | null;
+    }> {
+        try {
+            const admin = await AdminUserModel.findOne({
+                _id: adminUserId,
+                isActive: true,
+                isDelete: false,
+            }).select("_id name email role");
+            if (!admin) {
+                return {
+                    success: false,
+                    message: this.messageService.ADMIN_NOT_FOUND,
+                    data: null,
+                };
+            }
+
+            return {
+                success: true,
+                message: this.messageService.ADMIN_FETCH_SUCCESS,
+                data: admin,
+            };
+        } catch (error) {
+            console.log("Error in getAdminDetailsService:", error);
+            return {
+                success: false,
+                message: this.messageService.ADMIN_FETCH_ERROR,
                 data: null,
             };
         }

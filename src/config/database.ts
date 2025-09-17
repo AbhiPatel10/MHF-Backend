@@ -1,7 +1,7 @@
-// db.js
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { AdminUserModel } from '../entities/admin/admin.schema';
+import { VolunteerModel } from '../entities/volunteer.schema';
 
 dotenv.config();
 
@@ -23,4 +23,6 @@ export const connectDB = async () => {
 export const ensureCollections = async () => {
   await AdminUserModel.createCollection();
   console.log('✅ Admin collection ensured');
+  await VolunteerModel.createCollection();
+  console.log('✅ Volunteer collection ensured');
 };

@@ -1,7 +1,10 @@
-import { AdminUser } from "../../entities/admin/admin.schema";
+import { AdminUserDocument } from "../../entities/admin/admin.schema";
 
 export interface AdminLoginResponse {
     success: boolean;
     message: string;
-    data: (Partial<AdminUser> & { token: string }) | null;
+    data: {
+        adminUser: Partial<AdminUserDocument> | null,
+        accessToken: string
+    } | null;
 }
