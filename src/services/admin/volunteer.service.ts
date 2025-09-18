@@ -21,8 +21,10 @@ export class VolunteerService {
         address: { city: string; state: string; postalCode: string };
         bloodGroup: string;
         birthdate: Date;
+        phoneNo: string;
         occupation: string;
         skills: string[];
+        image?: string;
     }): Promise<{ success: boolean; message: string; data?: VolunteerDocument | null }> {
         try {
             const existingVolunteer = await VolunteerModel.findOne({ name: volunteerData.name });
@@ -54,7 +56,7 @@ export class VolunteerService {
      */
     async getVolunteerByIdService({ id }: { id: string }): Promise<{ success: boolean; message: string; data?: VolunteerDocument | null }> {
         try {
-            const volunteer = await VolunteerModel.findById(id).select('_id name address bloodGroup birthdate occupation skills isActive');
+            const volunteer = await VolunteerModel.findById(id).select('_id name address bloodGroup birthdate occupation skills isActive phoneNo image').populate("image", "url filename mimetype");
             if (!volunteer || volunteer.isDelete) {
                 return {
                     success: false,
@@ -72,6 +74,49 @@ export class VolunteerService {
             return {
                 success: false,
                 message: this.messageService.VOLUNTEER_FETCH_ERROR,
+                data: null
+            };
+        }
+    }
+
+    /**
+     * Gets all volunteers service
+     * @returns all volunteers service 
+     */
+    async getAllVolunteersService({ limit, offset }: { limit: number; offset: number })
+        : Promise<{
+            success: boolean;
+            message: string;
+            data?: {
+                volunteers: VolunteerDocument[] | null,
+                totalCount: number
+            } | null
+        }> {
+        try {
+            // total volunteers
+            const totalCount = await VolunteerModel.countDocuments({ isDelete: false });
+
+            // fetch with pagination
+            const volunteers = await VolunteerModel.find({ isDelete: false })
+                .select("_id name address bloodGroup birthdate occupation skills isActive image phoneNo")
+                .populate("image", "url filename mimetype")
+                .skip(offset)
+                .limit(limit)
+                .lean();
+
+            return {
+                success: true,
+                message: this.messageService.VOLUNTEER_ALL_FETCH_SUCCESS,
+                data: {
+                    volunteers,
+                    totalCount
+                }
+            };
+        } catch (error) {
+            console.error("Error in getAllVolunteersService:", error);
+            return {
+                success: false,
+                message: this.messageService.VOLUNTEER_ALL_FETCH_ERROR,
                 data: null
             };
         }
@@ -107,28 +152,31 @@ export class VolunteerService {
      * @param id 
      * @returns volunteer by id 
      */
-    async deleteVolunteerById({ id }: { id: string }): Promise<{ success: boolean; message: string }> {
+    async deleteVolunteerById({ id }: { id: string }): Promise<{ success: boolean; message: string, data: null }> {
         try {
             const volunteer = await VolunteerModel.findOneAndUpdate(
-                { _id: id, isActive: true, isDelete: false }, // only active + not deleted
+                { _id: id, isActive: true, isDelete: false },
                 { isDelete: true, isActive: false },
                 { new: true }
             );
             if (!volunteer) {
                 return {
                     success: false,
-                    message: 'Volunteer not found'
+                    message: this.messageService.VOLUNTEER_NOT_FOUND,
+                    data: null
                 };
             }
             return {
                 success: true,
-                message: 'Volunteer deleted successfully'
+                message: this.messageService.VOLUNTEER_DELETE_SUCCESSFULLY,
+                data: null
             };
         } catch (error) {
             console.error('Error in deleteVolunteerById:', error);
             return {
                 success: false,
-                message: 'Failed to delete volunteer'
+                message: this.messageService.VOLUNTEER_DELETE_ERROR,
+                data: null
             };
         }
     }

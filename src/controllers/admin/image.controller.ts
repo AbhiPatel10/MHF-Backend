@@ -15,7 +15,9 @@ export class ImageController {
 
     ) { }
 
-    // Image upload controller
+    /**
+     * Req upload image controller
+     */
     uploadImageController = async (req: UserRequest & { file?: Express.Multer.File }, res: Response, next: NextFunction) => {
         try {
 
@@ -56,7 +58,7 @@ export class ImageController {
                     data: {
                         publicId: uploadResult.public_id,
                         url: uploadResult.secure_url,
-                        adminImageId: data?.adminImageId ?? 0
+                        _id: data?.id ?? 0
                     }
                 })
             } catch (error) {
@@ -73,11 +75,14 @@ export class ImageController {
         }
     };
 
+    /**
+     * Delete image controller of image controller
+     */
     deleteImageController = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { adminImageId } = req.params;
+            const { id } = req.params;
 
-            const result = await this.imageService.imageDeleteService({ adminImageId: Number(adminImageId ?? 0) });
+            const result = await this.imageService.imageDeleteService({ imageId: id });
 
             return sendResponse({
                 res,

@@ -13,6 +13,6 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 router.post('/uploadImage', upload.single('image'), imageController.uploadImageController);
-router.delete('/deleteImage/:adminImageId', imageValidator.imageDeleteValidator, imageController.deleteImageController);
+router.delete('/deleteImage/:id', imageValidator.imageDeleteValidator, imageController.deleteImageController);
 
 export default router;

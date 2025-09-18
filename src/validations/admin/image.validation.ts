@@ -8,9 +8,9 @@ export class ImageValidator {
 
     imageDeleteValidator = (req: Request, res: Response, next: NextFunction) => {
         const { error } = Joi.object({
-            adminImageId: Joi.number().required().messages({
-                "number.base": `adminImageId should be a number`,
-                "any.required": `adminImageId is a required field`,
+            id: Joi.string().required().messages({
+                "string.base": "id should be a string",
+                "any.required": "id is a required field",
             }),
         }).validate(req.params);
 

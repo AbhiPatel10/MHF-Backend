@@ -1,23 +1,24 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, ManyToOne, OneToOne, ManyToMany, JoinColumn } from 'typeorm';
+import mongoose, { Schema, Document } from "mongoose";
 
-@Entity()
-export class AdminImages {
-    @PrimaryGeneratedColumn()
-    adminImageId!: number;
-
-    @Column()
-    url!: string; // path or cloud storage URL
-
-    @Column()
-    publicId?: string;
-
-    @Column({ nullable: true })
-    altText?: string;
-
-    @Column({ nullable: true })
-    mimeType?: string;
-
-    @CreateDateColumn()
-    createdOn!: Date;
-
+export interface ImageDocument extends Document {
+    url: string;          // Path or cloud storage URL
+    publicId?: string;    // Cloudinary or S3 ID
+    altText?: string;     // Optional alt text for accessibility
+    mimeType?: string;    // e.g. image/png, image/jpeg
+    createdOn: Date;      // Auto timestamp
 }
+
+const ImageSchema: Schema = new Schema<ImageDocument>(
+    {
+        url: { type: String, required: true },
+        publicId: { type: String },
+        altText: { type: String },
+        mimeType: { type: String },
+        createdOn: { type: Date, default: Date.now },
+    },
+    {
+        timestamps: true,
+    }
+);
+
+export const ImageModel = mongoose.model<ImageDocument>("Image", ImageSchema);

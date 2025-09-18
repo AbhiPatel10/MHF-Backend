@@ -157,7 +157,11 @@ export class MessageService {
     readonly VOLUNTEER_CREATE_ERROR = "Volunteer already exists"
     readonly VOLUNTEER_NOT_FOUND = "Volunteer not found"
     readonly VOLUNTEER_FETCH_SUCCESS = "Volunteer fetched successfully"
+    readonly VOLUNTEER_ALL_FETCH_SUCCESS = "Volunteers fetched successfully"
+    readonly VOLUNTEER_ALL_FETCH_ERROR = "Error while fetching all volunteers"
     readonly VOLUNTEER_FETCH_ERROR = "Error While fetching volunteer details"
     readonly VOLUNTEER_UPDATE_SUCCESSFULLY = "Volunteer updated successfully"
     readonly VOLUNTEER_UPDATE_ERROR = "Error While updating volunteer details"
+    readonly VOLUNTEER_DELETE_SUCCESSFULLY = "Volunteer deleted successfully"
+    readonly VOLUNTEER_DELETE_ERROR = "Error While deleting volunteer"
 }

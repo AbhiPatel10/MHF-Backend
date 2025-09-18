@@ -16,7 +16,7 @@ export class VolunteerController {
      */
     createVolunteerController = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { name, address, bloodGroup, birthdate, occupation, skills } = req.body;
+            const { name, address, bloodGroup, birthdate, phoneNo, occupation, skills, image } = req.body;
 
             const { success, message, data } = await this.volunteerService.createVolunteerService({
                 name,
@@ -24,12 +24,14 @@ export class VolunteerController {
                 bloodGroup,
                 birthdate: new Date(birthdate),
                 occupation,
+                phoneNo,
                 skills,
+                image
             });
 
             return sendResponse({
                 res,
-                status: success ? 201 : 400,
+                status: success ? 200 : 400,
                 message,
                 data,
             });
@@ -41,7 +43,7 @@ export class VolunteerController {
 
     /**
      * Get volunteer controller of volunteer controller
-     */
+    */
     getVolunteerController = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
@@ -53,13 +55,36 @@ export class VolunteerController {
                 message, data
             });
         } catch (error) {
+            console.error('Error in getVolunteerController:', error);
+            handleControllerError(error, res);
+        }
+    };
+
+    /**
+     * Get all volunteers controller of volunteer controller
+     */
+    getAllVolunteersController = async (req: Request, res: Response, next: NextFunction) => {
+        try {
+            const limit = parseInt(req.query.limit as string) || 0;
+            const offset = parseInt(req.query.offset as string) || 0;
+
+            const { success, message, data } = await this.volunteerService.getAllVolunteersService({ limit, offset });
+
+            return sendResponse({
+                res,
+                status: success ? 200 : 400,
+                message,
+                data
+            });
+        } catch (error) {
+            console.error("Error in getAllVolunteersController:", error);
             handleControllerError(error, res);
         }
     };
 
     /**
      * Update volunteer controller of volunteer controller
-     */
+    */
     updateVolunteerController = async (req: Request, res: Response, next: NextFunction) => {
         try {
             const { id } = req.params;
@@ -72,13 +97,14 @@ export class VolunteerController {
                 data
             });
         } catch (error) {
+            console.error('Error in updateVolunteerController:', error);
             handleControllerError(error, res);
         }
     };
 
     /**
      * Delete volunteer controller of volunteer controller
-     */
+    */
     deleteVolunteerController = async (req: Request, res: Response, next: NextFunction) => {
         try {
 
@@ -92,6 +118,7 @@ export class VolunteerController {
                 message
             });
         } catch (error) {
+            console.error('Error in deleteVolunteerController:', error);
             handleControllerError(error, res);
         }
     };
