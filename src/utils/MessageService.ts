@@ -10,16 +10,7 @@ export class MessageService {
     readonly ADMIN_ALREADY_CREATE_SUCCESS = "Admin created successfully!";
     readonly ADMIN_ALREADY_CREATE_ERROR = "Error while creating admin user!";
     readonly INVALID_EMAIL_OR_PASSWORD = "Invalid email and password!";
-    readonly CATEGORY_CREATE_SUCCESS = "Category created successfully!";
-    readonly CATEGORY_CREATE_ERROR = "Error while creating category!";
-    readonly CATEGORY_ALREADY_EXIST = "Category already exists!";
-    readonly CATEGORY_NOT_EXIST = "Category not exists!";
-    readonly CATEGORY_UPDATE_SUCCESS = "Category updated successfully!";
-    readonly CATEGORY_UPDATE_ERROR = "Error while updating category!";
-    readonly CATEGORY_DELETE_SUCCESS = "Category deleted successfully!";
-    readonly CATEGORY_DELETE_ERROR = "Error while deleting category!";
-    readonly CATEGORY_FETCH_SUCCESS = "Category fetched successfully!";
-    readonly CATEGORY_FETCH_ERROR = "Error while fetching category!";
+
 
     readonly SUB_CATEGORY_CREATE_SUCCESS = "Subcategory created successfully!";
     readonly SUB_CATEGORY_CREATE_ERROR = "Error while creating subcategory!";
@@ -164,4 +155,22 @@ export class MessageService {
     readonly VOLUNTEER_UPDATE_ERROR = "Error While updating volunteer details"
     readonly VOLUNTEER_DELETE_SUCCESSFULLY = "Volunteer deleted successfully"
     readonly VOLUNTEER_DELETE_ERROR = "Error While deleting volunteer"
+
+    readonly EVENT_NOT_FOUND = "Event not found";
+    readonly EVENT_FETCH_SUCCESS = "Event fetched successfully";
+    readonly EVENT_UPDATE_SUCCESS = "Event updated successfully";
+    readonly EVENT_UPDATE_ERROR = "Error updating event";
+
+
+    // Category Messages
+    readonly CATEGORY_CREATE_SUCCESS = "Category created successfully!";
+    readonly CATEGORY_CREATE_ERROR = "Error while creating category!";
+    readonly CATEGORY_ALREADY_EXIST = "Category already exists!";
+    readonly CATEGORY_NOT_EXIST = "Category not exists!";
+    readonly CATEGORY_UPDATE_SUCCESS = "Category updated successfully!";
+    readonly CATEGORY_UPDATE_ERROR = "Error while updating category!";
+    readonly CATEGORY_DELETE_SUCCESS = "Category deleted successfully!";
+    readonly CATEGORY_DELETE_ERROR = "Error while deleting category!";
+    readonly CATEGORY_FETCH_SUCCESS = "Category fetched successfully!";
+    readonly CATEGORY_FETCH_ERROR = "Error while fetching category!";
 }

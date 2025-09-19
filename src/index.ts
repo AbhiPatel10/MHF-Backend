@@ -21,7 +21,7 @@ app.use(cors({
 app.use(express.json());
 app.use('/api', routes);
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to Bizzio!' });
+  res.status(200).json({ message: 'Welcome to Mission Hope Foundation Backend!' });
 });
 app.use((req, res) => {
   res.status(404).json({ message: "This endpoint is not available in MHF." });
