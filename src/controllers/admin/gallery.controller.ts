@@ -10,7 +10,7 @@ export class GalleryController {
   constructor(
     @inject(GalleryService) private readonly galleryService: GalleryService,
     @inject(ImageService) private readonly imageService: ImageService
-  ) {}
+  ) { }
 
   //   add image to gallery
   addImageToGalleryController = async (req: Request, res: Response) => {
@@ -78,6 +78,7 @@ export class GalleryController {
       console.error('Error in Update GalleryController:', error);
     }
   };
+
   // Remove Image from Gallery
   removeImageToGalleryController = async (req: Request, res: Response) => {
     try {

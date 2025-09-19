@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { GalleryModel } from '../../entities/admin/gallery.schema';
+import { GalleryDocument, GalleryModel } from '../../entities/admin/gallery.schema';
 import { MessageService } from '../../utils/MessageService';
 import { inject, injectable } from 'tsyringe';
 import { ImageDocument } from 'src/entities/admin/adminImages.entity';
@@ -17,16 +17,7 @@ export class GalleryService {
    * @param { image }
    * @returns volunteer service
    */
-
-  async AddImageToGalleryService({
-    image,
-    altText,
-    imageDescription,
-  }: {
-    image: mongoose.Schema.Types.ObjectId;
-    altText: string;
-    imageDescription: string;
-  }): Promise<{ success: boolean; message: string; data?: any }> {
+  async AddImageToGalleryService({ image, altText, imageDescription }: { image: mongoose.Schema.Types.ObjectId; altText: string; imageDescription: string; }): Promise<{ success: boolean; message: string; data?: null }> {
     try {
       const gallery = new GalleryModel({
         image,
@@ -50,17 +41,12 @@ export class GalleryService {
     }
   }
 
-  async GetAllImageToGalleryService({
-    limit,
-    offset,
-  }: {
-    limit: string;
-    offset: string;
-  }): Promise<{
-    success: boolean;
-    message: string;
-    data?: any;
-  }> {
+  /**
+   * Gets all image to gallery service
+   * @param { limit, offset } 
+   * @returns all image to gallery service 
+   */
+  async GetAllImageToGalleryService({ limit, offset }: { limit: string; offset: string }): Promise<{ success: boolean; message: string; data?: GalleryDocument[] | null }> {
     try {
       const galleryImage = await GalleryModel.find()
         .limit(+limit)
@@ -89,11 +75,12 @@ export class GalleryService {
     }
   }
 
-  async RemoveImageToGalleryService({
-    id,
-  }: {
-    id: string;
-  }): Promise<{ success: boolean; message: string; data?: any }> {
+  /**
+   * Removes image to gallery service
+   * @param { id } 
+   * @returns image to gallery service 
+   */
+  async RemoveImageToGalleryService({ id }: { id: string }): Promise<{ success: boolean; message: string; data?: any }> {
     try {
       const galleryImage = await GalleryModel.findByIdAndDelete(id);
 
@@ -122,17 +109,12 @@ export class GalleryService {
     }
   }
 
-  async UpdateImageToGalleryService({
-    id,
-    image,
-    altText,
-    imageDescription,
-  }: {
-    id: string;
-    image: mongoose.Types.ObjectId | ImageDocument;
-    altText: string;
-    imageDescription: string;
-  }): Promise<{ success: boolean; message: string; data?: any }> {
+  /**
+   * Updates image to gallery service
+   * @param { id, image, altText, imageDescription } 
+   * @returns image to gallery service 
+   */
+  async UpdateImageToGalleryService({ id, image, altText, imageDescription }: { id: string; image: mongoose.Types.ObjectId | ImageDocument; altText: string; imageDescription: string; }): Promise<{ success: boolean; message: string; data?: any }> {
     try {
       const galleryImage = await GalleryModel.findById(id);
 
@@ -150,8 +132,6 @@ export class GalleryService {
           imageId: prevImage as string,
         });
       }
-
-      console.log(galleryImage.image, 'galleryImage.image');
 
       galleryImage.image = image;
       galleryImage.altText = altText;

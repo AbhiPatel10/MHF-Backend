@@ -11,11 +11,6 @@ const galleryValidator = container.resolve(GalleryValidator);
 router.post('/addImageToGallery', galleryValidator.updateGalleryValidator, galleryController.addImageToGalleryController);
 router.get('/getGalleryImages', galleryController.getGalleryImagesController);
 router.delete('/deleteImageFromGallery/:id', galleryController.removeImageToGalleryController);
-
-router.patch(
-  '/updateGallery/:id',
-  galleryValidator.updateGalleryValidator,
-  galleryController.updateGalleryController
-);
+router.patch('/updateGallery/:id', galleryValidator.updateGalleryValidator, galleryController.updateGalleryController);
 
 export default router;
