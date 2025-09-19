@@ -7,7 +7,7 @@ dotenv.config();
 
 export const connectDB = async () => {
   try {
-    const uri = `mongodb://${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || '27017'}/${process.env.DB_DATABASE}`;
+    const uri = `mongodb+srv://aniketprajapatibiizline_db_user:B4lmC81SPirjptS6@cluster0.f3kug2l.mongodb.net/`;
     await mongoose.connect(uri, {
       user: process.env.DB_USERNAME || undefined,
       pass: process.env.DB_PASSWORD || undefined,
