@@ -146,6 +146,42 @@ export class CategoryService {
         }
     }
 
+    async getAllActiveCategoriesService({ search }: { search: string }): Promise<{ success: boolean; message: string; data: { categories: CategoryDocument[], totalCount: number } | null }> {
+        try {
+
+            const query: any = { isDeleted: false };
+
+            // Add search filter if provided
+            if (search) {
+                query.name = { $regex: search, $options: 'i' }; // case-insensitive
+            }
+
+            const totalCount = await CategoryModel.countDocuments(query);
+
+            const categories = await CategoryModel.find(query).select('_id name isActive')
+                .sort({ createdAt: -1 });
+
+            return {
+                success: true,
+                message: this.messageService.CATEGORY_FETCH_SUCCESS,
+                data: {
+                    categories,
+                    totalCount
+                }
+            };
+
+        } catch (error) {
+
+            console.error("Error in getAllActiveCategoriesService:", error);
+
+            return {
+                success: false,
+                message: this.messageService.CATEGORY_FETCH_ERROR,
+                data: null
+            };
+        }
+    }
+
     /**
      * Deletes category service
      * @param id 

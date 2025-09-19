@@ -10,8 +10,7 @@ export class GalleryValidator {
    */
   updateGalleryValidator(req: Request, res: Response, next: NextFunction) {
     const { error } = Joi.object({
-      image: Joi.string().required().messages({
-        'any.required': 'Image is required',
+      image: Joi.string().optional().messages({
         'string.empty': 'Image cannot be empty',
       }),
       altText: Joi.string().optional().allow(''),

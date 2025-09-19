@@ -153,18 +153,13 @@ export class MessageService {
   readonly VOLUNTEER_DELETE_ERROR = 'Error While deleting volunteer';
 
   // Gallery
-  readonly ADD_IMAGE_TO_GALLERY_SUCCESSFULLY =
-    'Image added to gallery successfully';
+  readonly ADD_IMAGE_TO_GALLERY_SUCCESSFULLY = 'Image added to gallery successfully';
   readonly ADD_IMAGE_TO_GALLERY_ERROR = 'Image add to gallery failed';
-  readonly REMOVE_IMAGE_TO_GALLERY_SUCCESSFULLY =
-    'Image removed from gallery successfully';
+  readonly REMOVE_IMAGE_TO_GALLERY_SUCCESSFULLY = 'Image removed from gallery successfully';
   readonly REMOVE_IMAGE_TO_GALLERY_ERROR = 'Image remove from gallery failed';
-  readonly GET_ALL_GALLERY_IMAGES_SUCCESS =
-    'All gallery images fetched successfully';
-  readonly GET_ALL_GALLERY_IMAGES_ERROR =
-    'Error while fetching all gallery images';
-  readonly UPDATE_IMAGE_TO_GALLERY_SUCCESSFULLY =
-    'Image updated to gallery successfully';
+  readonly GET_ALL_GALLERY_IMAGES_SUCCESS = 'All gallery images fetched successfully';
+  readonly GET_ALL_GALLERY_IMAGES_ERROR = 'Error while fetching all gallery images';
+  readonly UPDATE_IMAGE_TO_GALLERY_SUCCESSFULLY = 'Image updated to gallery successfully';
   readonly UPDATE_IMAGE_TO_GALLERY_ERROR = 'Image update to gallery failed';
 
   readonly EVENT_NOT_FOUND = 'Event not found';

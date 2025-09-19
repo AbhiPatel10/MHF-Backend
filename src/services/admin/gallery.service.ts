@@ -46,30 +46,28 @@ export class GalleryService {
    * @param { limit, offset } 
    * @returns all image to gallery service 
    */
-  async GetAllImageToGalleryService({ limit, offset }: { limit: string; offset: string }): Promise<{ success: boolean; message: string; data?: GalleryDocument[] | null }> {
+  async GetAllImageToGalleryService({ limit, offset }: { limit: string; offset: string }): Promise<{ success: boolean; message: string; data?: { galleryImages: GalleryDocument[], totalCount: number } | null }> {
     try {
-      const galleryImage = await GalleryModel.find()
+      const galleryImages = await GalleryModel.find()
+        .populate("image", "url")
         .limit(+limit)
-        .skip(+offset);
+        .skip(+offset)
 
-      if (!galleryImage) {
-        return {
-          success: false,
-          message: this.messageService.IMAGE_NOT_FOUND,
-          data: null,
-        };
-      }
+      const totalCount = await GalleryModel.countDocuments();
 
       return {
         success: true,
-        message: this.messageService.REMOVE_IMAGE_TO_GALLERY_SUCCESSFULLY,
-        data: galleryImage,
+        message: this.messageService.GET_ALL_GALLERY_IMAGES_SUCCESS,
+        data: {
+          galleryImages,
+          totalCount
+        },
       };
     } catch (error) {
-      console.error('Error in RemoveImageToGalleryService:', error);
+      console.error('Error in GetAllImageToGalleryService:', error);
       return {
         success: false,
-        message: this.messageService.REMOVE_IMAGE_TO_GALLERY_ERROR,
+        message: this.messageService.GET_ALL_GALLERY_IMAGES_ERROR,
         data: null,
       };
     }
@@ -132,8 +130,9 @@ export class GalleryService {
           imageId: prevImage as string,
         });
       }
-
-      galleryImage.image = image;
+      if (image) {
+        galleryImage.image = image;
+      }
       galleryImage.altText = altText;
       galleryImage.imageDescription = imageDescription;
 

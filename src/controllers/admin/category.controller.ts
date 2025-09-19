@@ -89,6 +89,23 @@ export class CategoryController {
         }
     };
 
+
+    getAllActiveCategoriesController = async (req: Request, res: Response) => {
+        try {
+            const search = req.query.search as string || "";
+            const { success, data, message } = await this.categoryService.getAllActiveCategoriesService({ search });
+            return sendResponse({
+                res,
+                status: success ? 200 : 400,
+                message,
+                data
+            });
+        } catch (error) {
+            console.log("Error in getAllCategoriesController:", error);
+            handleControllerError(error, res);
+        }
+    };
+
     /**
      * Delete category controller of category controller
     */

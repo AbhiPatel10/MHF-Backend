@@ -13,6 +13,7 @@ router.post("/createCategory", categoryValidator.createCategoryValidator, catego
 router.get("/getCategoryDetails/:id", categoryValidator.paramsCategoryValidator, categoryController.getCategoryByIdController);
 router.put("/updateCategory/:id", categoryValidator.updateCategoryValidator, categoryValidator.paramsCategoryValidator, categoryController.updateCategoryController);
 router.get("/getAllCategories", categoryValidator.getAllCategoryValidator, categoryController.getAllCategoriesController);
+router.get("/getAllActiveCategories", categoryValidator.getAllCategoryValidator, categoryController.getAllActiveCategoriesController);
 router.delete("/deleteCategory/:id", categoryValidator.paramsCategoryValidator, categoryController.deleteCategoryController);
 
 export default router;

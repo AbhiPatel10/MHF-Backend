@@ -1,8 +1,8 @@
 import { Router } from "express";
 import { container } from "tsyringe";
 
-import { BlogController } from "src/controllers/admin/blog.controller";
-import { BlogValidator } from "src/validations/admin/blog.validator";
+import { BlogController } from "../../controllers/admin/blog.controller";
+import { BlogValidator } from "../../validations/admin/blog.validator";
 
 const router = Router();
 
