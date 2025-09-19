@@ -14,4 +14,11 @@ router.post(
   galleryController.addImageToGalleryController
 );
 
+router.get('/getGalleryImages', galleryController.getGalleryImagesController);
+
+router.delete(
+  '/deleteImageFromGallery/:id',
+  galleryController.removeImageToGalleryController
+);
+
 export default router;

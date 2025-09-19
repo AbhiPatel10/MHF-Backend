@@ -166,4 +166,7 @@ export class MessageService {
   readonly ADD_IMAGE_TO_GALLERY_SUCCESSFULLY =
     'Image added to gallery successfully';
   readonly ADD_IMAGE_TO_GALLERY_ERROR = 'Image add to gallery failed';
+  readonly REMOVE_IMAGE_TO_GALLERY_SUCCESSFULLY =
+    'Image removed from gallery successfully';
+  readonly REMOVE_IMAGE_TO_GALLERY_ERROR = 'Image remove from gallery failed';
 }
