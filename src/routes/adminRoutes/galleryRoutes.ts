@@ -12,4 +12,10 @@ router.post('/addImageToGallery', galleryValidator.updateGalleryValidator, galle
 router.get('/getGalleryImages', galleryController.getGalleryImagesController);
 router.delete('/deleteImageFromGallery/:id', galleryController.removeImageToGalleryController);
 
+router.patch(
+  '/updateGallery/:id',
+  galleryValidator.updateGalleryValidator,
+  galleryController.updateGalleryController
+);
+
 export default router;

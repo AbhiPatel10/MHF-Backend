@@ -2,11 +2,14 @@ import mongoose from 'mongoose';
 import { GalleryModel } from '../../entities/admin/gallery.schema';
 import { MessageService } from '../../utils/MessageService';
 import { inject, injectable } from 'tsyringe';
+import { ImageDocument } from 'src/entities/admin/adminImages.entity';
+import { ImageService } from './image.service';
 
 @injectable()
 export class GalleryService {
   constructor(
-    @inject(MessageService) private readonly messageService: MessageService
+    @inject(MessageService) private readonly messageService: MessageService,
+    @inject(ImageService) private readonly imageService: ImageService
   ) { }
 
   /**
@@ -18,14 +21,17 @@ export class GalleryService {
   async AddImageToGalleryService({
     image,
     altText,
+    imageDescription,
   }: {
     image: mongoose.Schema.Types.ObjectId;
     altText: string;
+    imageDescription: string;
   }): Promise<{ success: boolean; message: string; data?: any }> {
     try {
       const gallery = new GalleryModel({
         image,
         altText,
+        imageDescription,
       });
       await gallery?.save();
 
@@ -90,7 +96,7 @@ export class GalleryService {
   }): Promise<{ success: boolean; message: string; data?: any }> {
     try {
       const galleryImage = await GalleryModel.findByIdAndDelete(id);
-      console.log({ galleryImage });
+
       if (!galleryImage) {
         return {
           success: false,
@@ -104,13 +110,65 @@ export class GalleryService {
       return {
         success: true,
         message: this.messageService.REMOVE_IMAGE_TO_GALLERY_SUCCESSFULLY,
-        data: null,
+        data: galleryImage.image,
       };
     } catch (error) {
       console.error('Error in RemoveImageToGalleryService:', error);
       return {
         success: false,
         message: this.messageService.REMOVE_IMAGE_TO_GALLERY_ERROR,
+        data: null,
+      };
+    }
+  }
+
+  async UpdateImageToGalleryService({
+    id,
+    image,
+    altText,
+    imageDescription,
+  }: {
+    id: string;
+    image: mongoose.Types.ObjectId | ImageDocument;
+    altText: string;
+    imageDescription: string;
+  }): Promise<{ success: boolean; message: string; data?: any }> {
+    try {
+      const galleryImage = await GalleryModel.findById(id);
+
+      if (!galleryImage) {
+        return {
+          success: false,
+          message: this.messageService.IMAGE_NOT_FOUND,
+          data: null,
+        };
+      }
+
+      if (galleryImage.image !== image) {
+        const prevImage = galleryImage.image._id;
+        await this.imageService.imageDeleteService({
+          imageId: prevImage as string,
+        });
+      }
+
+      console.log(galleryImage.image, 'galleryImage.image');
+
+      galleryImage.image = image;
+      galleryImage.altText = altText;
+      galleryImage.imageDescription = imageDescription;
+
+      await galleryImage.save();
+
+      return {
+        success: true,
+        message: this.messageService.UPDATE_IMAGE_TO_GALLERY_SUCCESSFULLY,
+        data: galleryImage,
+      };
+    } catch (error) {
+      console.error('Error in UpdateImageToGalleryService:', error);
+      return {
+        success: false,
+        message: this.messageService.UPDATE_IMAGE_TO_GALLERY_ERROR,
         data: null,
       };
     }
