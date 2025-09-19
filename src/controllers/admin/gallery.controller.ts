@@ -15,9 +15,13 @@ export class GalleryController {
   //   add image to gallery
   addImageToGalleryController = async (req: Request, res: Response) => {
     try {
-      const { image, altText } = req.body;
+      const { image, altText, imageDescription } = req.body;
       const { success, message, data } =
-        await this.galleryService.AddImageToGalleryService({ image, altText });
+        await this.galleryService.AddImageToGalleryService({
+          image,
+          altText,
+          imageDescription,
+        });
       return sendResponse({
         res,
         status: success ? 200 : 400,
@@ -52,6 +56,28 @@ export class GalleryController {
     }
   };
 
+  // Update Gallery Description
+  updateGalleryController = async (req: Request, res: Response) => {
+    try {
+      const { id } = req.params;
+      const { image, altText, imageDescription } = req.body;
+      const { success, message, data } =
+        await this.galleryService.UpdateImageToGalleryService({
+          id,
+          image,
+          altText,
+          imageDescription,
+        });
+      return sendResponse({
+        res,
+        status: success ? 200 : 400,
+        message,
+        data,
+      });
+    } catch (error) {
+      console.error('Error in Update GalleryController:', error);
+    }
+  };
   // Remove Image from Gallery
   removeImageToGalleryController = async (req: Request, res: Response) => {
     try {

@@ -15,6 +15,7 @@ export class GalleryValidator {
         'string.empty': 'Image cannot be empty',
       }),
       altText: Joi.string().optional().allow(''),
+      imageDescription: Joi.string().optional().allow(''),
     }).validate(req.body);
 
     if (error) {

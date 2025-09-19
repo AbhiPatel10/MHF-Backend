@@ -21,4 +21,10 @@ router.delete(
   galleryController.removeImageToGalleryController
 );
 
+router.patch(
+  '/updateGallery/:id',
+  galleryValidator.updateGalleryValidator,
+  galleryController.updateGalleryController
+);
+
 export default router;
