@@ -173,14 +173,25 @@ export class MessageService {
   readonly EVENT_UPDATE_ERROR = 'Error updating event';
 
   // Category Messages
-  readonly CATEGORY_CREATE_SUCCESS = 'Category created successfully!';
-  readonly CATEGORY_CREATE_ERROR = 'Error while creating category!';
-  readonly CATEGORY_ALREADY_EXIST = 'Category already exists!';
-  readonly CATEGORY_NOT_EXIST = 'Category not exists!';
-  readonly CATEGORY_UPDATE_SUCCESS = 'Category updated successfully!';
-  readonly CATEGORY_UPDATE_ERROR = 'Error while updating category!';
-  readonly CATEGORY_DELETE_SUCCESS = 'Category deleted successfully!';
-  readonly CATEGORY_DELETE_ERROR = 'Error while deleting category!';
-  readonly CATEGORY_FETCH_SUCCESS = 'Category fetched successfully!';
-  readonly CATEGORY_FETCH_ERROR = 'Error while fetching category!';
+  readonly CATEGORY_CREATE_SUCCESS = "Category created successfully!";
+  readonly CATEGORY_CREATE_ERROR = "Error while creating category!";
+  readonly CATEGORY_ALREADY_EXIST = "Category already exists!";
+  readonly CATEGORY_NOT_EXIST = "Category not exists!";
+  readonly CATEGORY_UPDATE_SUCCESS = "Category updated successfully!";
+  readonly CATEGORY_UPDATE_ERROR = "Error while updating category!";
+  readonly CATEGORY_DELETE_SUCCESS = "Category deleted successfully!";
+  readonly CATEGORY_DELETE_ERROR = "Error while deleting category!";
+  readonly CATEGORY_FETCH_SUCCESS = "Category fetched successfully!";
+  readonly CATEGORY_FETCH_ERROR = "Error while fetching category!";
+
+  readonly BLOG_CREATE_SUCCESS = "Blog created successfully!";
+  readonly BLOG_CREATE_ERROR = "Error while creating blog!";
+  readonly BLOG_ALREADY_EXIST = "Blog already exists!";
+  readonly BLOG_NOT_EXIST = "Blog not exists!";
+  readonly BLOG_UPDATE_SUCCESS = "Blog updated successfully!";
+  readonly BLOG_UPDATE_ERROR = "Error while updating blog!";
+  readonly BLOG_DELETE_SUCCESS = "Blog deleted successfully!";
+  readonly BLOG_DELETE_ERROR = "Error while deleting blog!";
+  readonly BLOG_FETCH_SUCCESS = "Blog fetched successfully!";
+  readonly BLOG_FETCH_ERROR = "Error while fetching blog!";
 }

@@ -1,0 +1,28 @@
+import mongoose, { model, Document } from 'mongoose';
+import { ImageDocument } from './admin/adminImages.entity';
+import { CategoryDocument } from './category.schema';
+
+export interface BlogDocument extends Document {
+    title: string;
+    category: mongoose.Types.ObjectId | CategoryDocument;
+    image?: mongoose.Types.ObjectId | ImageDocument;
+    content: any; // Editor.js JSON
+    isDraft: boolean;
+    isActive: boolean;
+    isDelete: boolean;
+}
+
+const BlogSchema = new mongoose.Schema(
+    {
+        title: { type: String, required: true },
+        category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category' },
+        image: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
+        content: { type: mongoose.Schema.Types.Mixed }, // JSON from Editor.js
+        isDraft: { type: Boolean, default: false },
+        isActive: { type: Boolean, default: true },
+        isDelete: { type: Boolean, default: false },
+    },
+    { timestamps: true }
+);
+
+export const BlogModel = model<BlogDocument>('Blog', BlogSchema);

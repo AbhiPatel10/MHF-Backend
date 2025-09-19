@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { injectable } from "tsyringe";
+import { inject, injectable } from "tsyringe";
 
 import { sendResponse } from "../../utils/response";
 import { EventService } from "../../services/admin/event.service";
@@ -7,11 +7,9 @@ import { handleControllerError } from "../../utils/errorHandler";
 
 @injectable()
 export class EventController {
-    private eventService: EventService;
-
-    constructor(eventService: EventService) {
-        this.eventService = eventService;
-    }
+    constructor(
+        @inject(EventService) private readonly eventService: EventService
+    ) { }
 
     /**
      * Create event controller of event controller

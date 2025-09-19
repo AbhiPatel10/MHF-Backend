@@ -1,5 +1,5 @@
 import { inject, injectable } from "tsyringe";
-import { CategoryDocument, CategoryModel } from "../../entities/category.model";
+import { CategoryDocument, CategoryModel } from "../../entities/category.schema";
 import { MessageService } from "../../utils/MessageService";
 
 @injectable()

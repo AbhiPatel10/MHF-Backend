@@ -10,7 +10,7 @@ export class GalleryService {
   constructor(
     @inject(MessageService) private readonly messageService: MessageService,
     @inject(ImageService) private readonly imageService: ImageService
-  ) {}
+  ) { }
 
   /**
    * Creates volunteer service
