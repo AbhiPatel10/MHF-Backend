@@ -2,6 +2,7 @@ import mongoose from 'mongoose';
 import { GalleryModel } from '../../entities/admin/gallery.schema';
 import { MessageService } from '../../utils/MessageService';
 import { inject, injectable } from 'tsyringe';
+import { ImageService } from './image.service';
 
 @injectable()
 export class GalleryService {
@@ -90,7 +91,7 @@ export class GalleryService {
   }): Promise<{ success: boolean; message: string; data?: any }> {
     try {
       const galleryImage = await GalleryModel.findByIdAndDelete(id);
-      console.log({ galleryImage });
+
       if (!galleryImage) {
         return {
           success: false,
@@ -104,7 +105,7 @@ export class GalleryService {
       return {
         success: true,
         message: this.messageService.REMOVE_IMAGE_TO_GALLERY_SUCCESSFULLY,
-        data: null,
+        data: galleryImage.image,
       };
     } catch (error) {
       console.error('Error in RemoveImageToGalleryService:', error);

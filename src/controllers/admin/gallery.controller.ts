@@ -3,11 +3,13 @@ import { handleControllerError } from '../../utils/errorHandler';
 import { sendResponse } from '../../utils/response';
 import { inject, injectable } from 'tsyringe';
 import { Request, Response } from 'express';
+import { ImageService } from '../../services/admin/image.service';
 
 @injectable()
 export class GalleryController {
   constructor(
-    @inject(GalleryService) private readonly galleryService: GalleryService
+    @inject(GalleryService) private readonly galleryService: GalleryService,
+    @inject(ImageService) private readonly imageService: ImageService
   ) {}
 
   //   add image to gallery
@@ -54,15 +56,17 @@ export class GalleryController {
   removeImageToGalleryController = async (req: Request, res: Response) => {
     try {
       const { id } = req.params;
-
-      console.log({ id });
       const { success, message, data } =
         await this.galleryService.RemoveImageToGalleryService({ id });
+
+      if (success) {
+        await this.imageService.imageDeleteService({ imageId: data });
+      }
       return sendResponse({
         res,
         status: success ? 200 : 400,
         message,
-        data,
+        data: [],
       });
     } catch (error) {
       console.error('Error in Remove Image To GalleryController:', error);
