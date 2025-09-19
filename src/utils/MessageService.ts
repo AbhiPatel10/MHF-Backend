@@ -183,4 +183,15 @@ export class MessageService {
     readonly CATEGORY_DELETE_ERROR = "Error while deleting category!";
     readonly CATEGORY_FETCH_SUCCESS = "Category fetched successfully!";
     readonly CATEGORY_FETCH_ERROR = "Error while fetching category!";
+
+    readonly BLOG_CREATE_SUCCESS = "Blog created successfully!";
+    readonly BLOG_CREATE_ERROR = "Error while creating blog!";
+    readonly BLOG_ALREADY_EXIST = "Blog already exists!";
+    readonly BLOG_NOT_EXIST = "Blog not exists!";
+    readonly BLOG_UPDATE_SUCCESS = "Blog updated successfully!";
+    readonly BLOG_UPDATE_ERROR = "Error while updating blog!";
+    readonly BLOG_DELETE_SUCCESS = "Blog deleted successfully!";
+    readonly BLOG_DELETE_ERROR = "Error while deleting blog!";
+    readonly BLOG_FETCH_SUCCESS = "Blog fetched successfully!";
+    readonly BLOG_FETCH_ERROR = "Error while fetching blog!";
 }

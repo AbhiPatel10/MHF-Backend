@@ -7,7 +7,7 @@ import { inject, injectable } from 'tsyringe';
 export class GalleryService {
   constructor(
     @inject(MessageService) private readonly messageService: MessageService
-  ) {}
+  ) { }
 
   /**
    * Creates volunteer service
