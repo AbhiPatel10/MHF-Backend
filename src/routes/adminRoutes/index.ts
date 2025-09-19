@@ -1,14 +1,16 @@
-import { Router } from "express";
+import { Router } from 'express';
 import authRoutes from './authRoutes';
 import imageRoutes from './imageRoutes';
 import volunteerRoutes from './volunteerRoutes';
-import { adminAuthMiddleware } from "../../middlewares/authMiddleware";
+import { adminAuthMiddleware } from '../../middlewares/authMiddleware';
+import galleryRoutes from './galleryRoutes';
 
 const router = Router();
 
-router.use("/auth", authRoutes);
-router.use("/image", imageRoutes);
-router.use("/volunteer", volunteerRoutes);
+router.use('/auth', authRoutes);
+router.use('/image', imageRoutes);
+router.use('/volunteer', volunteerRoutes);
+router.use('/gallery', galleryRoutes);
 // router.use('/image', adminAuthMiddleware, imageRoutes);
 
 export default router;
