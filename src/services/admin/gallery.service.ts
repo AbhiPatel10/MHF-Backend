@@ -1,9 +1,9 @@
 import mongoose from 'mongoose';
-import { GalleryDocument, GalleryModel } from '../../entities/admin/gallery.schema';
 import { MessageService } from '../../utils/MessageService';
 import { inject, injectable } from 'tsyringe';
 import { ImageDocument } from 'src/entities/admin/adminImages.entity';
 import { ImageService } from './image.service';
+import { GalleryDocument, GalleryModel } from '../../entities/gallery.schema';
 
 @injectable()
 export class GalleryService {

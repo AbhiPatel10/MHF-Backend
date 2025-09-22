@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
-import { ImageDocument } from './adminImages.entity';
-import { AdminUserDocument } from './admin.schema';
+import { AdminUserDocument } from './admin/admin.schema';
+import { ImageDocument } from './admin/adminImages.entity';
 
 export interface GalleryDocument extends Document {
   image: mongoose.Types.ObjectId | ImageDocument;
