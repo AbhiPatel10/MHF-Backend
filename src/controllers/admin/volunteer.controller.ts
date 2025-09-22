@@ -67,8 +67,9 @@ export class VolunteerController {
         try {
             const limit = parseInt(req.query.limit as string) || 0;
             const offset = parseInt(req.query.offset as string) || 0;
+            const search = req.query.search as string || "";
 
-            const { success, message, data } = await this.volunteerService.getAllVolunteersService({ limit, offset });
+            const { success, message, data } = await this.volunteerService.getAllVolunteersService({ limit, offset, search });
 
             return sendResponse({
                 res,

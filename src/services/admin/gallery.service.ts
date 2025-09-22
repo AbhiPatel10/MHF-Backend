@@ -114,7 +114,8 @@ export class GalleryService {
    */
   async UpdateImageToGalleryService({ id, image, altText, imageDescription }: { id: string; image: mongoose.Types.ObjectId | ImageDocument; altText: string; imageDescription: string; }): Promise<{ success: boolean; message: string; data?: any }> {
     try {
-      const galleryImage = await GalleryModel.findById(id);
+      console.log("id----", id)
+      const galleryImage = await GalleryModel.findById(id).populate("image");
 
       if (!galleryImage) {
         return {
@@ -124,14 +125,21 @@ export class GalleryService {
         };
       }
 
-      if (galleryImage.image !== image) {
-        const prevImage = galleryImage.image._id;
-        await this.imageService.imageDeleteService({
-          imageId: prevImage as string,
-        });
-      }
       if (image) {
+        if (galleryImage.image !== image) {
+          const prevImage = galleryImage.image._id;
+          await this.imageService.imageDeleteService({
+            imageId: prevImage as string,
+          });
+        }
+      }
+      console.log("galleryImage---", galleryImage)
+      console.log("image---", image)
+      if (image) {
+        console.log("sdsdsds")
         galleryImage.image = image;
+      } else {
+        galleryImage.image = galleryImage.image;
       }
       galleryImage.altText = altText;
       galleryImage.imageDescription = imageDescription;

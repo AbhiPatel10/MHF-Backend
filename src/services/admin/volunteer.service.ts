@@ -83,18 +83,22 @@ export class VolunteerService {
      * Gets all volunteers service
      * @returns all volunteers service 
      */
-    async getAllVolunteersService({ limit, offset }: { limit: number; offset: number })
-        : Promise<{
-            success: boolean;
-            message: string;
-            data?: {
-                volunteers: VolunteerDocument[] | null,
-                totalCount: number
-            } | null
-        }> {
+    async getAllVolunteersService({ limit, offset, search }: { limit: number; offset: number, search: string }): Promise<{ success: boolean; message: string; data?: { volunteers: VolunteerDocument[] | null, totalCount: number } | null }> {
         try {
+            const searchFilter = search
+                ? {
+                    $or: [
+                        { name: { $regex: search, $options: "i" } },
+                        { address: { $regex: search, $options: "i" } },
+                        { occupation: { $regex: search, $options: "i" } },
+                        { skills: { $regex: search, $options: "i" } },
+                        { phoneNo: { $regex: search, $options: "i" } },
+                    ],
+                    isDelete: false,
+                }
+                : { isDelete: false };
             // total volunteers
-            const totalCount = await VolunteerModel.countDocuments({ isDelete: false });
+            const totalCount = await VolunteerModel.countDocuments(searchFilter);
 
             // fetch with pagination
             const volunteers = await VolunteerModel.find({ isDelete: false })

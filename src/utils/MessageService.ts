@@ -189,4 +189,16 @@ export class MessageService {
   readonly BLOG_DELETE_ERROR = "Error while deleting blog!";
   readonly BLOG_FETCH_SUCCESS = "Blog fetched successfully!";
   readonly BLOG_FETCH_ERROR = "Error while fetching blog!";
+
+
+  readonly CONTACT_NOT_EXIST = "Contact not exists!";
+  readonly CONTACT_FETCH_SUCCESS = "Contact fetched successfully!";
+  readonly CONTACT_FETCH_ERROR = "Error while fetching contact!";
+  readonly CONTACT_UPDATE_SUCCESS = "Contact updated successfully!";
+  readonly CONTACT_UPDATE_ERROR = "Error while updating contact!";
+  readonly CONTACT_DELETE_SUCCESS = "Contact deleted successfully!";
+  readonly CONTACT_DELETE_ERROR = "Error while deleting contact!";
+  readonly CONTACT_CREATE_SUCCESS = "Contact created successfully!";
+  readonly CONTACT_CREATE_ERROR = "Error while creating contact!";
+  readonly CONTACT_ALREADY_EXIST = "Contact already exists!";
 }
