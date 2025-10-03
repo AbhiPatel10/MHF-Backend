@@ -98,16 +98,13 @@ export class MessageService {
   readonly TEAM_MEMBER_UPDATE_SUCCESS = 'Team member updated successfully!';
   readonly TEAM_MEMBER_UPDATE_ERROR = 'Error while updating team member!';
   readonly TEAM_MEMBER_NOT_FOUND = 'Team member not found!';
-  readonly TEAM_MEMBER_FETCH_SUCCESS =
-    'Team member details fetched successfully!';
-  readonly TEAM_MEMBER_FETCH_ERROR =
-    'Error while fetching team member details!';
-  readonly GET_ALL_TEAM_MEMBER_FETCH_SUCCESS =
-    'All team members fetched successfully!';
-  readonly GET_ALL_TEAM_MEMBER_FETCH_ERROR =
-    'Error while fetching all team members!';
+  readonly TEAM_MEMBER_FETCH_SUCCESS = 'Team member details fetched successfully!';
+  readonly TEAM_MEMBER_FETCH_ERROR = 'Error while fetching team member details!';
+  readonly GET_ALL_TEAM_MEMBER_FETCH_SUCCESS = 'All team members fetched successfully!';
+  readonly GET_ALL_TEAM_MEMBER_FETCH_ERROR = 'Error while fetching all team members!';
   readonly TEAM_MEMBER_DELETE_SUCCESS = 'Team member deleted successfully';
   readonly TEAM_MEMBER_DELETE_ERROR = 'Error deleting team member';
+  readonly TEAM_MEMBER_ALREADY_EXIST = 'Team member already exists!';
 
   readonly PRODUCT_DELETE_SUCCESS = 'Product deleted successfully';
   readonly PRODUCT_DELETE_ERROR = 'Error deleting product';
