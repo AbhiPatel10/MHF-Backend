@@ -1,6 +1,6 @@
 import mongoose, { Document, model } from 'mongoose';
 import { ImageDocument } from './admin/adminImages.entity';
-import { TeamMemberTypes } from 'src/types/admin/teamMembers.types';
+import { TeamMemberTypes } from '../types/admin/teamMembers.types';
 
 export interface TeamMemberDocument extends Document {
     name: string;
@@ -29,6 +29,7 @@ const TeamMemberSchema = new mongoose.Schema(
             postalCode: { type: String, required: false },
         },
         bloodGroup: { type: String, required: false },
+        role: { type: String, required: false },
         birthdate: { type: Date, required: false },
         phoneNo: { type: String, required: false },
         occupation: { type: String, required: false },

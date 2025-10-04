@@ -17,6 +17,7 @@ export class TeamMemberService {
      */
     async createTeamMemberService(teamMemberData: {
         name: string;
+        role?: string;
         address: { city: string; state: string; postalCode: string };
         bloodGroup: string;
         birthdate: Date;
@@ -24,11 +25,19 @@ export class TeamMemberService {
         occupation: string;
         skills: string[];
         image?: string;
-    }): Promise<{ success: boolean; message: string; data?: TeamMemberDocument | null }> {
+        memberType: string;
+
+    }): Promise<{ success: boolean; message: string; data: TeamMemberDocument | null }> {
         try {
             const existingTeamMember = await TeamMemberModel.findOne({ name: teamMemberData.name });
+
             if (existingTeamMember) {
-                return { success: false, message: this.messageService.TEAM_MEMBER_ALREADY_EXIST };
+
+                return {
+                    success: false,
+                    message: this.messageService.TEAM_MEMBER_ALREADY_EXIST,
+                    data: null
+                };
             }
 
             const newTeamMember = await TeamMemberModel.create(teamMemberData);
@@ -54,7 +63,7 @@ export class TeamMemberService {
     async getTeamMemberByIdService({ id }: { id: string }): Promise<{ success: boolean; message: string; data?: TeamMemberDocument | null }> {
         try {
             const teamMember = await TeamMemberModel.findById(id)
-                .select('_id name address bloodGroup birthdate occupation skills isActive phoneNo image')
+                .select('_id name address bloodGroup birthdate occupation skills isActive phoneNo image email role memberType')
                 .populate("image", "url filename mimetype");
 
             if (!teamMember || teamMember.isDelete) {
@@ -82,7 +91,7 @@ export class TeamMemberService {
     /**
      * Gets all team members
      */
-    async getAllTeamMembersService({ limit, offset, search }: { limit: number; offset: number, search: string }): Promise<{ success: boolean; message: string; data?: { teamMembers: TeamMemberDocument[] | null, totalCount: number } | null }> {
+    async getAllTeamMembersService({ limit, offset, search, memberType }: { limit: number; offset: number, search: string, memberType: string }): Promise<{ success: boolean; message: string; data?: { teamMembers: TeamMemberDocument[] | null, totalCount: number } | null }> {
         try {
             const searchFilter = search
                 ? {
@@ -95,14 +104,14 @@ export class TeamMemberService {
                     ],
                     isDelete: false,
                 }
-                : { isDelete: false };
+                : { isDelete: false, memberType };
 
             // total team members
             const totalCount = await TeamMemberModel.countDocuments(searchFilter);
 
             // fetch with pagination
-            const teamMembers = await TeamMemberModel.find({ isDelete: false })
-                .select("_id name address bloodGroup birthdate occupation skills isActive image phoneNo")
+            const teamMembers = await TeamMemberModel.find(searchFilter)
+                .select("_id name address bloodGroup birthdate occupation skills isActive image phoneNo role memberType")
                 .populate("image", "url filename mimetype")
                 .skip(offset)
                 .limit(limit)

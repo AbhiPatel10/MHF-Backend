@@ -3,6 +3,7 @@ import Joi from "joi";
 import { sendResponse } from "../../utils/response";
 import { injectable } from "tsyringe";
 import mongoose from "mongoose";
+import { TeamMemberTypes } from "../../types/admin/teamMembers.types";
 
 @injectable()
 export class TeamMemberValidator {
@@ -16,43 +17,44 @@ export class TeamMemberValidator {
                 'string.empty': 'Name cannot be empty'
             }),
             address: Joi.object({
-                city: Joi.string().required().messages({
+                city: Joi.string().optional().messages({
                     'any.required': 'City is required',
                     'string.empty': 'City cannot be empty'
                 }),
-                state: Joi.string().required().messages({
+                state: Joi.string().optional().messages({
                     'any.required': 'State is required',
                     'string.empty': 'State cannot be empty'
                 }),
-                postalCode: Joi.string().required().messages({
+                postalCode: Joi.string().optional().messages({
                     'any.required': 'Postal Code is required',
                     'string.empty': 'Postal Code cannot be empty'
                 }),
             }).required().messages({
                 'any.required': 'Address is required'
             }),
-            bloodGroup: Joi.string().required().messages({
+            bloodGroup: Joi.string().optional().messages({
                 'any.required': 'Blood Group is required',
                 'string.empty': 'Blood Group cannot be empty'
             }),
-            birthdate: Joi.date().iso().required().messages({
+            role: Joi.string().optional().messages({
+                'any.required': 'Blood Group is required',
+                'string.empty': 'Blood Group cannot be empty'
+            }),
+            birthdate: Joi.date().iso().optional().messages({
                 'any.required': 'Birthdate is required',
                 'date.format': 'Birthdate must be in ISO format'
             }),
-            phoneNo: Joi.string().required().messages({
+            phoneNo: Joi.string().optional().messages({
                 'any.required': 'Phone number is required',
                 'string.empty': 'Phone number cannot be empty'
             }),
-            occupation: Joi.string().required().messages({
+            occupation: Joi.string().optional().messages({
                 'any.required': 'Occupation is required',
                 'string.empty': 'Occupation cannot be empty'
             }),
-            skills: Joi.array().items(Joi.string()).min(1).required().messages({
-                'any.required': 'Skills are required',
-                'array.min': 'At least one skill is required'
-            }),
+            skills: Joi.array().items(Joi.string()).min(0).optional(),
             memberType: Joi.string()
-                .valid("ASSET", "KEY_MEMBER", "VOLUNTEER")
+                .valid(TeamMemberTypes.ASSET, TeamMemberTypes.KEY_MEMBER, TeamMemberTypes.VOLUNTEER)
                 .required()
                 .messages({
                     'any.only': 'Member type must be one of: ASSET, KEY_MEMBER, VOLUNTEER',
@@ -94,43 +96,37 @@ export class TeamMemberValidator {
                 'string.empty': 'Name cannot be empty'
             }),
             address: Joi.object({
-                city: Joi.string().required().messages({
-                    'any.required': 'City is required',
+                city: Joi.string().optional().messages({
                     'string.empty': 'City cannot be empty'
                 }),
-                state: Joi.string().required().messages({
-                    'any.required': 'State is required',
+                state: Joi.string().optional().messages({
                     'string.empty': 'State cannot be empty'
                 }),
-                postalCode: Joi.string().required().messages({
-                    'any.required': 'Postal Code is required',
+                postalCode: Joi.string().optional().messages({
                     'string.empty': 'Postal Code cannot be empty'
                 }),
-            }).required().messages({
-                'any.required': 'Address is required'
-            }),
-            bloodGroup: Joi.string().required().messages({
-                'any.required': 'Blood Group is required',
+            }).optional(),
+            bloodGroup: Joi.string().optional().messages({
                 'string.empty': 'Blood Group cannot be empty'
             }),
-            birthdate: Joi.date().iso().required().messages({
-                'any.required': 'Birthdate is required',
+            role: Joi.string().optional().messages({
+                'any.required': 'Role is required',
+                'string.empty': 'Role cannot be empty'
+            }),
+            birthdate: Joi.date().iso().optional().messages({
                 'date.format': 'Birthdate must be in ISO format'
             }),
-            phoneNo: Joi.string().required().messages({
+            phoneNo: Joi.string().optional().messages({
                 'any.required': 'Phone number is required',
                 'string.empty': 'Phone number cannot be empty'
             }),
-            occupation: Joi.string().required().messages({
+            occupation: Joi.string().optional().messages({
                 'any.required': 'Occupation is required',
                 'string.empty': 'Occupation cannot be empty'
             }),
-            skills: Joi.array().items(Joi.string()).min(1).required().messages({
-                'any.required': 'Skills are required',
-                'array.min': 'At least one skill is required'
-            }),
+            skills: Joi.array().items(Joi.string()).min(0).optional(),
             memberType: Joi.string()
-                .valid("ASSET", "KEY_MEMBER", "VOLUNTEER")
+                .valid(TeamMemberTypes.ASSET, TeamMemberTypes.KEY_MEMBER, TeamMemberTypes.VOLUNTEER)
                 .required()
                 .messages({
                     'any.only': 'Member type must be one of: ASSET, KEY_MEMBER, VOLUNTEER',

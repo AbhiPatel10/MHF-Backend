@@ -7,6 +7,7 @@ import blogRoutes from '../v1/blog.routes';
 import eventRoutes from './event.routes';
 import categoryRoutes from './category.route';
 import contactRoutes from './contact.routes';
+import teamMemberRoutes from './teamMemberRoutes';
 
 const router = Router();
 
@@ -18,6 +19,6 @@ router.use("/event", eventRoutes);
 router.use("/category", categoryRoutes);
 router.use("/blog", blogRoutes);
 router.use("/contact", contactRoutes);
-
+router.use("/team", teamMemberRoutes);
 
 export default router;

@@ -15,17 +15,19 @@ export class TeamMemberController {
      */
     createTeamMemberController = async (req: Request, res: Response, next: NextFunction) => {
         try {
-            const { name, address, bloodGroup, birthdate, phoneNo, occupation, skills, image } = req.body;
+            const { name, role, address, bloodGroup, birthdate, phoneNo, occupation, skills, image, memberType } = req.body;
 
             const { success, message, data } = await this.teamMemberService.createTeamMemberService({
                 name,
+                role,
                 address,
                 bloodGroup,
                 birthdate: new Date(birthdate),
                 occupation,
                 phoneNo,
                 skills,
-                image
+                image,
+                memberType
             });
 
             return sendResponse({
@@ -68,8 +70,9 @@ export class TeamMemberController {
             const limit = parseInt(req.query.limit as string) || 0;
             const offset = parseInt(req.query.offset as string) || 0;
             const search = req.query.search as string || "";
+            const memberType = req.query.memberType as string || "";
 
-            const { success, message, data } = await this.teamMemberService.getAllTeamMembersService({ limit, offset, search });
+            const { success, message, data } = await this.teamMemberService.getAllTeamMembersService({ limit, offset, search, memberType });
 
             return sendResponse({
                 res,
