@@ -29,6 +29,7 @@ app.use((req, res) => {
   res.status(404).json({ message: 'This endpoint is not available in MHF.' });
 });
 
-app.listen(PORT, () => {
-  console.log(`🚀 Server is running on http://localhost:${PORT}`);
-});
+// app.listen(PORT, () => {
+//   console.log(`🚀 Server is running on http://localhost:${PORT}`);
+// });
+export default app;
