@@ -3,11 +3,12 @@ import authRoutes from './authRoutes';
 import imageRoutes from './imageRoutes';
 import volunteerRoutes from './volunteerRoutes';
 import galleryRoutes from './galleryRoutes';
-import blogRoutes from '../v1/blog.routes';
 import eventRoutes from './event.routes';
 import categoryRoutes from './category.route';
 import contactRoutes from './contact.routes';
 import teamMemberRoutes from './teamMemberRoutes';
+import blogRoutes from './blog.routes';
+
 
 const router = Router();
 
