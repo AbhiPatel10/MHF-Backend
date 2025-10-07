@@ -1,9 +1,9 @@
 import { Request } from "express";
+import { AdminUserDocument } from "../entities/admin/admin.schema";
 
 export interface AdminRequest extends Request {
     adminUser?: {
-        adminUserId: number,
-        email: string
+        admin: AdminUserDocument
     },
 }
 

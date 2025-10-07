@@ -33,7 +33,6 @@ export function authMiddleware(req: Request, res: Response, next: NextFunction) 
 export function adminAuthMiddleware(req: Request, res: Response, next: NextFunction) {
     const SECRET = process.env.JWT_SECRET || 'your_jwt_secret';
     const authHeader = req.headers['authorization'];
-
     if (!authHeader || !authHeader.startsWith('Bearer ')) {
         return res.status(401).json({ error: 'No token provided' });
     }

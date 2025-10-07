@@ -8,17 +8,18 @@ import categoryRoutes from './category.route';
 import contactRoutes from './contact.routes';
 import teamMemberRoutes from './teamMemberRoutes';
 import blogRoutes from './blog.routes';
+import { adminAuthMiddleware } from '../../middlewares/authMiddleware';
 
 
 const router = Router();
 
 router.use('/auth', authRoutes);
-router.use('/image', imageRoutes);
+router.use('/image', adminAuthMiddleware, imageRoutes);
 router.use('/volunteer', volunteerRoutes);
 router.use('/gallery', galleryRoutes);
 router.use("/event", eventRoutes);
 router.use("/category", categoryRoutes);
-router.use("/blog", blogRoutes);
+router.use("/blog", adminAuthMiddleware, blogRoutes);
 router.use("/contact", contactRoutes);
 router.use("/team", teamMemberRoutes);
 

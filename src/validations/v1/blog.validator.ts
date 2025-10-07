@@ -34,6 +34,9 @@ export class BlogValidator {
             search: Joi.string().optional().allow('').messages({
                 'string.base': 'search should be a string',
             }),
+            categoryId: Joi.string().optional().messages({
+                'string.base': 'categoryId should be a string',
+            }),
         }).validate(req.query);
 
         if (error) {

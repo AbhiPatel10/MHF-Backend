@@ -38,9 +38,10 @@ export class BlogController {
         try {
             const limit = parseInt(req.query.limit as string) || 10;
             const offset = parseInt(req.query.offset as string) || 0;
+            const categoryId = req.query.categoryId as string | undefined;
             const search = req.query.search as string || "";
 
-            const { success, data, message } = await this.blogService.getAllBlogsService({ limit, offset, search });
+            const { success, data, message } = await this.blogService.getAllBlogsService({ limit, offset, search, categoryId });
 
             return sendResponse({
                 res,

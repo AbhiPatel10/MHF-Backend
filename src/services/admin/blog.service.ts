@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { BlogDocument, BlogModel } from "../../entities/blog.schema";
 import { MessageService } from "../../utils/MessageService";
+import { AdminUserDocument } from "src/entities/admin/admin.schema";
 
 @injectable()
 export class BlogService {
@@ -13,7 +14,7 @@ export class BlogService {
      * @param { title, category, image, content, isDraft } 
      * @returns blog service 
      */
-    async createBlogService({ title, category, image, content, isDraft }: { title: string; category: string; image?: string; content: any; isDraft: boolean; }): Promise<{ success: boolean; message: string; data: BlogDocument | null }> {
+    async createBlogService({ title, category, image, content, isDraft, adminUser }: { title: string; category: string; image?: string; content: any; isDraft: boolean; adminUser: AdminUserDocument }): Promise<{ success: boolean; message: string; data: BlogDocument | null }> {
         try {
             const blog = await BlogModel.create({
                 title,
@@ -21,6 +22,7 @@ export class BlogService {
                 image,
                 content,
                 isDraft,
+                createdBy: adminUser
             });
 
             return {
@@ -47,7 +49,8 @@ export class BlogService {
         try {
             const blog = await BlogModel.findById(id)
                 .populate("category")
-                .populate("image");
+                .populate("image")
+                .populate("createdBy");
 
             if (!blog) {
                 return { success: false, message: this.messageService.BLOG_NOT_EXIST };
@@ -80,6 +83,7 @@ export class BlogService {
             const blogs = await BlogModel.find(filter)
                 .populate("category")
                 .populate("image")
+                .populate("createdBy")
                 .skip(offset)
                 .limit(limit)
                 .sort({ createdAt: -1 });

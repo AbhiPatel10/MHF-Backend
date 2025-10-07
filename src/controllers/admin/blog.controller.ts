@@ -3,6 +3,8 @@ import { inject, injectable } from "tsyringe";
 import { BlogService } from "../../services/admin/blog.service";
 import { sendResponse } from "../../utils/response";
 import { handleControllerError } from "../../utils/errorHandler";
+import { AdminRequest } from "../../types/types";
+import { AdminUserDocument } from "../../entities/admin/admin.schema";
 
 @injectable()
 export class BlogController {
@@ -14,8 +16,9 @@ export class BlogController {
     /**
      * Create blog controller of blog controller
      */
-    createBlogController = async (req: Request, res: Response) => {
+    createBlogController = async (req: AdminRequest, res: Response) => {
         try {
+            const adminUser = req.adminUser?.admin as AdminUserDocument;
             const { title, category, image, content, isDraft } = req.body;
 
             const { success, data, message } = await this.blogService.createBlogService({
@@ -24,6 +27,7 @@ export class BlogController {
                 image,
                 content,
                 isDraft,
+                adminUser
             });
 
             return sendResponse({
@@ -61,7 +65,7 @@ export class BlogController {
     /**
      * Get all blogs controller of blog controller
      */
-    getAllBlogsController = async (req: Request, res: Response) => {
+    getAllBlogsController = async (req: AdminRequest, res: Response) => {
         try {
             const limit = parseInt(req.query.limit as string) || 10;
             const offset = parseInt(req.query.offset as string) || 0;

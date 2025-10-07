@@ -7,8 +7,8 @@ dotenv.config();
 
 export const connectDB = async () => {
   try {
-    // const uri = `mongodb://${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || '27017'}/${process.env.DB_DATABASE}`;
-    const uri = process.env.DB_URL ?? "mongodb://localhost:27017/mhf";
+    const uri = `mongodb://${process.env.DB_HOST || 'localhost'}:${process.env.DB_PORT || '27017'}/${process.env.DB_DATABASE}`;
+    // const uri = process.env.DB_URL ?? "mongodb://localhost:27017/mhf";
 
     await mongoose.connect(uri, {
       user: process.env.DB_USERNAME || undefined,

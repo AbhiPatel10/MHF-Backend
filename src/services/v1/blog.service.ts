@@ -17,7 +17,8 @@ export class BlogService {
         try {
             const blog = await BlogModel.findById(id)
                 .populate("category")
-                .populate("image");
+                .populate("image")
+                .populate("createdBy");
 
             if (!blog) {
                 return { success: false, message: this.messageService.BLOG_NOT_EXIST };
@@ -34,13 +35,17 @@ export class BlogService {
      * Gets all blogs service
      * @returns  
      */
-    async getAllBlogsService({ limit, offset, search = "" }: { limit: number; offset: number; search?: string }) {
+    async getAllBlogsService({ limit, offset, search = "", categoryId }: { limit: number; offset: number; search?: string, categoryId?: string }) {
         try {
             const filter: any = { isDelete: false };
 
             // Search in blog title
             if (search) {
                 filter.title = { $regex: search, $options: "i" };
+            }
+
+            if (categoryId) {
+                filter.category = categoryId;
             }
 
             // Get total count (for pagination)
@@ -50,6 +55,7 @@ export class BlogService {
             const blogs = await BlogModel.find(filter)
                 .populate("category")
                 .populate("image")
+                .populate("createdBy")
                 .skip(offset)
                 .limit(limit)
                 .sort({ createdAt: -1 });
