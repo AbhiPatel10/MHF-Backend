@@ -8,6 +8,7 @@ import categoryRoutes from './category.route';
 import contactRoutes from './contact.routes';
 import teamMemberRoutes from './teamMemberRoutes';
 import blogRoutes from './blog.routes';
+import volunteerApplicationRoutes from './volunteerApplicationRoutes';
 import { adminAuthMiddleware } from '../../middlewares/authMiddleware';
 
 
@@ -22,5 +23,6 @@ router.use("/category", categoryRoutes);
 router.use("/blog", adminAuthMiddleware, blogRoutes);
 router.use("/contact", contactRoutes);
 router.use("/team", teamMemberRoutes);
+router.use("/volunteerApplication", volunteerApplicationRoutes);
 
 export default router;

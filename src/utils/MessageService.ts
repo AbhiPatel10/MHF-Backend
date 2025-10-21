@@ -198,4 +198,7 @@ export class MessageService {
   readonly CONTACT_CREATE_SUCCESS = "Contact created successfully!";
   readonly CONTACT_CREATE_ERROR = "Error while creating contact!";
   readonly CONTACT_ALREADY_EXIST = "Contact already exists!";
+
+  readonly APPLY_SUCCESS = "Application submitted successfully!";
+  readonly APPLY_ERROR = "Error while submitting application!";
 }
