@@ -1,6 +1,7 @@
 import { inject, injectable } from "tsyringe";
 import { MessageService } from "../../utils/MessageService";
 import { VolunteerApplicationModel } from "../../entities/volunteerApplication.schema";
+import { VolunteerApplicationStatus } from "../../types/admin/volunteerApplication.types";
 
 @injectable()
 export class VolunteerApplicationService {
@@ -39,17 +40,33 @@ export class VolunteerApplicationService {
     async getVolunteerApplicationsService({
         limit = 10,
         offset = 0,
+        search
     }: {
         limit?: number;
         offset?: number;
+        search?: string
     }) {
         try {
+            const safeSearch = typeof search === "string" ? search.trim() : "";
             const [applications, total] = await Promise.all([
-                VolunteerApplicationModel.find({ isDelete: false })
+                VolunteerApplicationModel.find({
+                    isDelete: false,
+                    $or: [
+                        { fullName: { $regex: safeSearch, $options: "i" } },
+                        { email: { $regex: safeSearch, $options: "i" } },
+                        { phone: { $regex: safeSearch, $options: "i" } },
+                    ],
+                })
                     .sort({ createdAt: -1 })
                     .skip(offset)
                     .limit(limit),
-                VolunteerApplicationModel.countDocuments({ isDelete: false }),
+                VolunteerApplicationModel.countDocuments({
+                    isDelete: false,
+                    $or: [
+                        { fullName: { $regex: safeSearch, $options: "i" } },
+                        { email: { $regex: safeSearch, $options: "i" } },
+                    ],
+                }),
             ]);
 
             return {
@@ -69,5 +86,68 @@ export class VolunteerApplicationService {
             };
         }
     }
+
+    async toggleVolunteerApplicationStatusService({ id, status }: { id: string; status: VolunteerApplicationStatus }) {
+        try {
+            const updated = await VolunteerApplicationModel.findByIdAndUpdate(
+                id,
+                { status },
+                { new: true }
+            );
+
+            if (!updated) {
+                return {
+                    success: false,
+                    message: "Volunteer application not found.",
+                    data: null,
+                };
+            }
+
+            return {
+                success: true,
+                message: `Volunteer application status updated to ${status}.`,
+                data: updated,
+            };
+        } catch (error) {
+            console.error("Error in toggleVolunteerApplicationStatusService:", error);
+            return {
+                success: false,
+                message: "Failed to update application status.",
+                data: null,
+            };
+        }
+    }
+
+    async deleteVolunteerApplicationService(id: string) {
+        try {
+            const deleted = await VolunteerApplicationModel.findByIdAndUpdate(
+                id,
+                { isDelete: true },
+                { new: true }
+            );
+
+            if (!deleted) {
+                return {
+                    success: false,
+                    message: "Volunteer application not found.",
+                    data: null,
+                };
+            }
+
+            return {
+                success: true,
+                message: "Volunteer application deleted successfully.",
+                data: deleted,
+            };
+        } catch (error) {
+            console.error("Error in deleteVolunteerApplicationService:", error);
+            return {
+                success: false,
+                message: "Failed to delete volunteer application.",
+                data: null,
+            };
+        }
+    }
+
 
 }
