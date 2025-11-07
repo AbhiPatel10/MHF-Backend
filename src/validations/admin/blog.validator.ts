@@ -7,7 +7,9 @@ export class BlogValidator {
         const { error } = Joi.object({
             title: Joi.string().min(3).max(150).required(),
             category: Joi.string().required(), // Reference to category table
+            author: Joi.string().required(), // Reference to category table
             image: Joi.string().optional(),
+            authorImage: Joi.string().optional(),
             content: Joi.object().required(), // Editor.js JSON
             isDraft: Joi.boolean().default(false),
         }).validate(req.body);

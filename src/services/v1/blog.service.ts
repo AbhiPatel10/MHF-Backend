@@ -18,6 +18,7 @@ export class BlogService {
             const blog = await BlogModel.findById(id)
                 .populate("category")
                 .populate("image")
+                .populate("authorImage")
                 .populate("createdBy");
 
             if (!blog) {
@@ -55,6 +56,7 @@ export class BlogService {
             const blogs = await BlogModel.find(filter)
                 .populate("category")
                 .populate("image")
+                .populate("authorImage")
                 .populate("createdBy")
                 .skip(offset)
                 .limit(limit)

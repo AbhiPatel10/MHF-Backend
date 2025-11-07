@@ -19,7 +19,7 @@ export class BlogController {
     createBlogController = async (req: AdminRequest, res: Response) => {
         try {
             const adminUser = req.adminUser?.admin as AdminUserDocument;
-            const { title, category, image, content, isDraft } = req.body;
+            const { title, category, image, content, isDraft, author, authorImage } = req.body;
 
             const { success, data, message } = await this.blogService.createBlogService({
                 title,
@@ -27,7 +27,9 @@ export class BlogController {
                 image,
                 content,
                 isDraft,
-                adminUser
+                adminUser,
+                author,
+                authorImage,
             });
 
             return sendResponse({

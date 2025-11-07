@@ -14,7 +14,11 @@ export class BlogService {
      * @param { title, category, image, content, isDraft } 
      * @returns blog service 
      */
-    async createBlogService({ title, category, image, content, isDraft, adminUser }: { title: string; category: string; image?: string; content: any; isDraft: boolean; adminUser: AdminUserDocument }): Promise<{ success: boolean; message: string; data: BlogDocument | null }> {
+    async createBlogService({
+        title, category, image, content, isDraft, adminUser, author, authorImage
+    }: {
+        title: string; category: string; image?: string; content: any; isDraft: boolean; adminUser: AdminUserDocument, author?: string; authorImage?: string;
+    }): Promise<{ success: boolean; message: string; data: BlogDocument | null }> {
         try {
             const blog = await BlogModel.create({
                 title,
@@ -22,7 +26,9 @@ export class BlogService {
                 image,
                 content,
                 isDraft,
-                createdBy: adminUser
+                createdBy: adminUser,
+                author: author,
+                authorImage,
             });
 
             return {
@@ -50,6 +56,7 @@ export class BlogService {
             const blog = await BlogModel.findById(id)
                 .populate("category")
                 .populate("image")
+                .populate("authorImage")
                 .populate("createdBy");
 
             if (!blog) {
@@ -83,6 +90,7 @@ export class BlogService {
             const blogs = await BlogModel.find(filter)
                 .populate("category")
                 .populate("image")
+                .populate("authorImage")
                 .populate("createdBy")
                 .skip(offset)
                 .limit(limit)
@@ -114,7 +122,9 @@ export class BlogService {
                 new: true,
             })
                 .populate("category")
-                .populate("image");
+                .populate("image")
+                .populate("authorImage")
+                .populate("createdBy");
 
             if (!updatedBlog) {
                 return { success: false, message: this.messageService.BLOG_NOT_EXIST };
