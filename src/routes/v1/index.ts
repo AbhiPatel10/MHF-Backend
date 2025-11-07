@@ -8,6 +8,7 @@ import blogRoutes from './blog.routes';
 import categoryRoutes from './category.route';
 import eventRoutes from './event.routes';
 import VolunteerApplicationRoutes from './volunteerApplicationRoutes';
+import newsletterRoutes from './newsletter.routes';
 
 const router = Router();
 
@@ -20,5 +21,6 @@ router.use('/blog', blogRoutes);
 router.use('/category', categoryRoutes);
 router.use('/event', eventRoutes);
 router.use('/volunteerApplication', VolunteerApplicationRoutes);
+router.use("/newsletter", newsletterRoutes);
 
 export default router;

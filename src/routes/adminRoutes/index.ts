@@ -9,6 +9,7 @@ import contactRoutes from './contact.routes';
 import teamMemberRoutes from './teamMemberRoutes';
 import blogRoutes from './blog.routes';
 import volunteerApplicationRoutes from './volunteerApplicationRoutes';
+import newsLetterRoutes from './newsletter.routes';
 import { adminAuthMiddleware } from '../../middlewares/authMiddleware';
 
 
@@ -16,13 +17,14 @@ const router = Router();
 
 router.use('/auth', authRoutes);
 router.use('/image', adminAuthMiddleware, imageRoutes);
-router.use('/volunteer', volunteerRoutes);
-router.use('/gallery', galleryRoutes);
-router.use("/event", eventRoutes);
-router.use("/category", categoryRoutes);
+router.use('/volunteer', adminAuthMiddleware, volunteerRoutes);
+router.use('/gallery', adminAuthMiddleware, galleryRoutes);
+router.use("/event", adminAuthMiddleware, eventRoutes);
+router.use("/category", adminAuthMiddleware, categoryRoutes);
 router.use("/blog", adminAuthMiddleware, blogRoutes);
-router.use("/contact", contactRoutes);
-router.use("/team", teamMemberRoutes);
-router.use("/volunteerApplication", volunteerApplicationRoutes);
+router.use("/contact", adminAuthMiddleware, contactRoutes);
+router.use("/team", adminAuthMiddleware, teamMemberRoutes);
+router.use("/volunteerApplication", adminAuthMiddleware, volunteerApplicationRoutes);
+router.use("/newsletter", adminAuthMiddleware, newsLetterRoutes);
 
 export default router;

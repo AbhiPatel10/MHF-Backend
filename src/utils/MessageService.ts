@@ -201,4 +201,5 @@ export class MessageService {
 
   readonly APPLY_SUCCESS = "Application submitted successfully!";
   readonly APPLY_ERROR = "Error while submitting application!";
+  readonly NEWSLETTER_FETCH_SUCCESS = "Newsletter fetched successfully!";
 }
