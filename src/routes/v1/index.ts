@@ -9,6 +9,7 @@ import categoryRoutes from './category.route';
 import eventRoutes from './event.routes';
 import VolunteerApplicationRoutes from './volunteerApplicationRoutes';
 import newsletterRoutes from './newsletter.routes';
+import teamMemberRoutes from './teamMemberRoutes';
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/category', categoryRoutes);
 router.use('/event', eventRoutes);
 router.use('/volunteerApplication', VolunteerApplicationRoutes);
 router.use("/newsletter", newsletterRoutes);
+router.use("/team", teamMemberRoutes);
 
 export default router;
