@@ -14,10 +14,14 @@ export class VolunteerApplicationService {
      * @param { id } 
      * @returns  
      */
+
     async applyAsVolunteerService(payload: {
         fullName: string;
         email: string;
         phone: string;
+        whatsapp?: string;
+        bloodGroup?: string;
+        address: string;
         reason?: string;
     }) {
         try {

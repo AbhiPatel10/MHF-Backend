@@ -13,6 +13,18 @@ export class VolunteerApplicationValidator {
         .messages({
           "string.pattern.base": "Phone number must be exactly 10 digits.",
         }),
+      whatsapp: Joi.string()
+        .pattern(/^[0-9]{10}$/)
+        .optional()
+        .allow("")
+        .messages({
+          "string.pattern.base": "WhatsApp number must be exactly 10 digits.",
+        }),
+      bloodGroup: Joi.string().optional().allow(""),
+      address: Joi.string().messages({
+        "string.base": "Address must be a string.",
+        "string.required": "Address is required.",
+      }).required(),
       reason: Joi.string().max(500).optional().allow(""),
     });
 

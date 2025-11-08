@@ -16,13 +16,16 @@ export class VolunteerApplicationController {
      */
     applyAsVolunteerController = async (req: Request, res: Response) => {
         try {
-            const { fullName, email, phone, reason } = req.body;
+            const { fullName, email, phone, whatsapp, bloodGroup, address, reason } = req.body;
 
             const { success, data, message } =
                 await this.volunteerApplicationService.applyAsVolunteerService({
                     fullName,
                     email,
                     phone,
+                    whatsapp,
+                    bloodGroup,
+                    address,
                     reason,
                 });
 
