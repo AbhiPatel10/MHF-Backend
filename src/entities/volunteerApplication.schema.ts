@@ -8,6 +8,10 @@ export interface VolunteerApplicationDocument extends Document {
     whatsapp?: string;
     bloodGroup?: string;
     address: string;
+    city: string;
+    state: string;
+    country: string;
+    countryCode: string;
     reason?: string;
     status: VolunteerApplicationStatus;
     isActive: boolean;
@@ -22,6 +26,10 @@ const VolunteerApplicationSchema = new mongoose.Schema(
         whatsapp: { type: String, default: "" }, // optional
         bloodGroup: { type: String, default: "" }, // optional
         address: { type: String, required: true }, // required
+        city: { type: String, required: true },
+        state: { type: String, required: true },
+        country: { type: String, required: true },
+        countryCode: { type: String, required: true },
         reason: { type: String },
         status: {
             type: String,

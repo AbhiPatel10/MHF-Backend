@@ -22,6 +22,10 @@ export class VolunteerApplicationService {
         whatsapp?: string;
         bloodGroup?: string;
         address: string;
+        city: string;
+        state: string;
+        country: string;
+        countryCode: string;
         reason?: string;
     }) {
         try {

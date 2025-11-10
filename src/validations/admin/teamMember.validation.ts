@@ -11,6 +11,7 @@ export class TeamMemberValidator {
      * Create team member validator
      */
     createTeamMemberValidator = (req: Request, res: Response, next: NextFunction) => {
+        console.log("req---", req.body)
         const { error } = Joi.object({
             name: Joi.string().required().messages({
                 'any.required': 'Name is required',
@@ -32,7 +33,7 @@ export class TeamMemberValidator {
             }).required().messages({
                 'any.required': 'Address is required'
             }),
-            bloodGroup: Joi.string().optional().messages({
+            bloodGroup: Joi.string().optional().allow("").messages({
                 'any.required': 'Blood Group is required',
                 'string.empty': 'Blood Group cannot be empty'
             }),
@@ -40,7 +41,7 @@ export class TeamMemberValidator {
                 'any.required': 'Blood Group is required',
                 'string.empty': 'Blood Group cannot be empty'
             }),
-            birthdate: Joi.date().iso().optional().messages({
+            birthdate: Joi.date().iso().optional().allow("").messages({
                 'any.required': 'Birthdate is required',
                 'date.format': 'Birthdate must be in ISO format'
             }),

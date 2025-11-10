@@ -20,7 +20,7 @@ export class TeamMemberService {
         role?: string;
         address: { city: string; state: string; postalCode: string };
         bloodGroup: string;
-        birthdate: Date;
+        birthdate: Date | null;
         phoneNo: string;
         occupation: string;
         skills: string[];

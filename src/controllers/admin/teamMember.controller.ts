@@ -22,7 +22,7 @@ export class TeamMemberController {
                 role,
                 address,
                 bloodGroup,
-                birthdate: new Date(birthdate),
+                birthdate: birthdate ? new Date(birthdate) : null,
                 occupation,
                 phoneNo,
                 skills,
