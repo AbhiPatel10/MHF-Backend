@@ -56,12 +56,10 @@ export class VolunteerApplicationValidator {
         }),
 
       address: Joi.string()
-        .min(5)
         .required()
         .messages({
           "string.base": "Address must be a string.",
           "string.empty": "Address is required.",
-          "string.min": "Address must have at least 5 characters.",
         }),
 
       city: Joi.string()
